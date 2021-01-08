@@ -1,0 +1,16 @@
+session_name: 4-pane-split
+windows:
+  - window_name: dev window
+    layout: tiled
+    shell_command_before:
+      - cd ~/Code/thousand/packages # run as a first command in all panes
+    panes:
+      - shell_command: # pane no. 1
+          - cd ./thousand-server
+          - yarn dev
+      - shell_command: # pane no. 2
+          - cd ./thousand-common
+          - yarn watch
+      - shell_command: # pane no. 3
+          - cd ./thousand-client
+          - yarn start
