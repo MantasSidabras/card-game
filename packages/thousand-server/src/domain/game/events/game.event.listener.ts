@@ -2,6 +2,7 @@ import {
   createGame,
   joinGame,
   leaveGame,
+  setPlayers,
   setTiles,
 } from '@thousand/common/dist/redux-store/game/game.slice';
 import eventEmitter from '../../../emitter/event.emitter';
@@ -48,7 +49,7 @@ eventEmitter.on<GameLeftEvent>(
     if (!game.players.length) {
       gameManager.games.delete(game.id);
     } else {
-      reply(game.playerIds, { type: 'PLAYERS', payload: game.playerIds });
+      reply(game.playerIds, setPlayers(game.playerIds));
     }
   }
 );
@@ -62,7 +63,7 @@ eventEmitter.on<GameCreatedEvent>(
     game.addPlayer(player);
     reply(clientId, createGame(game.code));
     // TODO create redux action
-    reply(game.playerIds, { type: 'GAME_JOINED', payload: game.id });
+    reply(game.playerIds, setPlayers(game.playerIds));
   }
 );
 
@@ -74,7 +75,7 @@ eventEmitter.on<GameJoinedEvent>(
     player.joinGame(game);
     game.addPlayer(player);
     reply(clientId, joinGame(gameCode));
-    reply(game.playerIds, { type: 'PLAYERS', payload: game.playerIds });
+    reply(game.playerIds, setPlayers(game.playerIds));
   }
 );
 

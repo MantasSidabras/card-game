@@ -2,7 +2,7 @@ import { createSlice, PayloadAction, createAction } from "@reduxjs/toolkit";
 
 export interface GameState {
   code: string;
-  numberOfPlayers: number;
+  players: string[];
   grid: string[];
 }
 const leaveGame = createAction("leaveGame");
@@ -11,19 +11,22 @@ const joinGame = createAction<string>("joinGame");
 
 const initialState: GameState = {
   code: "",
-  numberOfPlayers: 0,
+  players: [],
   grid: Array(9).fill(""),
 };
 
 const {
   reducer: gameReducer,
-  actions: { setTiles },
+  actions: { setTiles, setPlayers },
 } = createSlice({
   name: "game",
   initialState,
   reducers: {
     setTiles: (state, { payload }: PayloadAction<string[]>) => {
       state.grid = payload;
+    },
+    setPlayers: (state, { payload }: PayloadAction<string[]>) => {
+      state.players = payload;
     },
   },
   extraReducers: (builder) => {
@@ -40,5 +43,5 @@ const {
   },
 });
 
-export { setTiles, leaveGame, createGame, joinGame };
+export { setTiles, leaveGame, createGame, joinGame, setPlayers };
 export default gameReducer;
