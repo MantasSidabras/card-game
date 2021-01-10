@@ -25,7 +25,7 @@ class GameManager {
 
   getGameByCode(gameCode: string) {
     for (const game of this._games.values()) {
-      if (game.code === gameCode) {
+      if (game.code === gameCode.toUpperCase()) {
         return game;
       }
     }

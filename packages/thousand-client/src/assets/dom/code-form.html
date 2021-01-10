@@ -1,0 +1,17 @@
+<style>
+    .wrapper  {
+        background-color: red;
+        padding: 15px;
+    }
+    .wrapper input {
+        width: 240px;
+        font-size: 48px;
+        text-transform: uppercase;
+        text-align: center;
+    }
+</style>
+
+<div class="wrapper">
+    <input type="text" placeholder="Code" id="code" name="code" maxlength="5" onkeypress="return /[A-Z]/i.test(event.key)">
+</div>
+<div class="shadow"></div>

@@ -72,7 +72,7 @@ commandEmitter.on<JoinGameCommand>(
     const game = gameManager.getGameByCode(gameCode);
     if (game) {
       if (!player.activeGame) {
-        emitEvent(gameJoinedEvent(gameCode));
+        emitEvent(gameJoinedEvent(gameCode.toUpperCase()));
       }
     } else {
       reply(clientId, { type: 'GAME_NOT_EXIST' });

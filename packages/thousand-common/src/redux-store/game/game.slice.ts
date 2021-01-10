@@ -1,24 +1,25 @@
-import { createSlice, PayloadAction, createAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, createAction } from "@reduxjs/toolkit";
 
 export interface GameState {
   code: string;
   numberOfPlayers: number;
   grid: string[];
 }
-const leaveGame = createAction('leaveGame');
-const createGame = createAction<string>('createGame');
+const leaveGame = createAction("leaveGame");
+const createGame = createAction<string>("createGame");
+const joinGame = createAction<string>("joinGame");
 
 const initialState: GameState = {
-  code: '',
+  code: "",
   numberOfPlayers: 0,
-  grid: Array(9).fill(''),
+  grid: Array(9).fill(""),
 };
 
 const {
   reducer: gameReducer,
   actions: { setTiles },
 } = createSlice({
-  name: 'game',
+  name: "game",
   initialState,
   reducers: {
     setTiles: (state, { payload }: PayloadAction<string[]>) => {
@@ -28,13 +29,16 @@ const {
   extraReducers: (builder) => {
     builder
       .addCase(leaveGame, (state) => {
-        state.code = '';
+        state.code = "";
       })
       .addCase(createGame, (state, { payload }) => {
+        state.code = payload;
+      })
+      .addCase(joinGame, (state, { payload }) => {
         state.code = payload;
       });
   },
 });
 
-export { setTiles, leaveGame, createGame };
+export { setTiles, leaveGame, createGame, joinGame };
 export default gameReducer;

@@ -1,5 +1,6 @@
 import {
   createGame,
+  joinGame,
   leaveGame,
   setTiles,
 } from '@thousand/common/dist/redux-store/game/game.slice';
@@ -47,7 +48,7 @@ eventEmitter.on<GameLeftEvent>(
     if (!game.players.length) {
       gameManager.games.delete(game.id);
     } else {
-      reply(game.playerIds, { type: 'PLAYERS', payload: game.players });
+      reply(game.playerIds, { type: 'PLAYERS', payload: game.playerIds });
     }
   }
 );
@@ -71,6 +72,9 @@ eventEmitter.on<GameJoinedEvent>(
     const player = playerManager.get(clientId)!;
     const game = gameManager.getGameByCode(gameCode)!;
     player.joinGame(game);
+    game.addPlayer(player);
+    reply(clientId, joinGame(gameCode));
+    reply(game.playerIds, { type: 'PLAYERS', payload: game.playerIds });
   }
 );
 

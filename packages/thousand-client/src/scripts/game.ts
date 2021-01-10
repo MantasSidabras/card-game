@@ -29,6 +29,9 @@ const config: Phaser.Types.Core.GameConfig = {
       gravity: { y: 400 },
     },
   },
+  dom: {
+    createContainer: true
+  }
 };
 let activeScene = activeSceneSelector(store.getState());
 

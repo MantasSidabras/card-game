@@ -8,6 +8,7 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   preload() {
+    this.load.html('code-form', 'assets/dom/code-form.html');
     for (let i = 0; i <= 5; i++) {
       this.load.image(`btn-${i}`, `assets/Ui/blue_button0${i}.png`);
       this.load.image(`btn-${i}-disabled`, `assets/Ui/grey_button0${i}.png`);

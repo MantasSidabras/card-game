@@ -1,4 +1,7 @@
-import { EventBase, EventEmitArgs, EventListenerParams } from '@thousand/common/src/server-events/event.types';
+import {
+  EventBase,
+  EventEmitArgs,
+} from '@thousand/common/src/server-events/event.types';
 
 export interface CommandListenerParams<P, M = any> extends EventEmitArgs {
   payload: P;

@@ -1,9 +1,7 @@
-import { changeScene } from '@thousand/common/dist/redux-store/scene/scene.slice';
 import ScenePicker from '@thousand/common/dist/redux-store/scene/ScenePicker';
-import store from '@thousand/common/dist/redux-store/store';
 import commandDispatcher from '../../websocket/command-dispatcher';
 import MenuButton from '../objects/gameMenu/menuButton';
-import { createGame } from '@thousand/common/dist/commands/game/game.command';
+import { createGame, joinGame } from '@thousand/common/dist/commands/game/game.command';
 
 export default class MenuScene extends Phaser.Scene {
   btn: Phaser.GameObjects.Container;
@@ -26,16 +24,19 @@ export default class MenuScene extends Phaser.Scene {
         },
       })
     );
-
-    const joinGame = this.add.existing(
+    const codeForm = this.add.dom(centerW - 400, 350).createFromCache('code-form').addListener('change');
+    const joinGameButton = this.add.existing(
       new MenuButton(this, {
         x: centerW,
         y: 350,
         text: 'Join game',
         onClick: () => {
-          console.log('hello there sir!');
+          const code = codeForm.getChildByName('code') as HTMLInputElement;
+          commandDispatcher.send(joinGame(code.value));
         },
       })
     );
+
+
   }
 }

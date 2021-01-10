@@ -29,6 +29,12 @@ export default class LobbyScene extends Phaser.Scene {
       })
       .setOrigin(1, 0);
     store.subscribe(() => {});
+    this.add
+      .text(this.cameras.main.width - 200, 50, 'players:', {
+        color: '#000000',
+        fontSize: '48px',
+      })
+      .setOrigin(1, 0);
   }
 
   update() {
