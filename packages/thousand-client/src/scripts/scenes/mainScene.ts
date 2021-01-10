@@ -43,7 +43,6 @@ export default class MainScene extends Phaser.Scene {
     });
 
     this.fpsText = new FpsText(this);
-    this.createGameButton = new CreateGameButton(this);
 
     this.add
       .text(this.cameras.main.width - 15, 15, `Phaser v${Phaser.VERSION}`, {

@@ -30,8 +30,8 @@ const config: Phaser.Types.Core.GameConfig = {
     },
   },
   dom: {
-    createContainer: true
-  }
+    createContainer: true,
+  },
 };
 let activeScene = activeSceneSelector(store.getState());
 
@@ -40,7 +40,6 @@ socket.addEventListener('open', () => {
 });
 socket.addEventListener('message', ({ data }) => {
   const action: AnyAction = JSON.parse(data);
-  console.log(action);
   store.dispatch(action);
 });
 
@@ -49,7 +48,6 @@ window.addEventListener('load', () => {
   store.subscribe(() => {
     const storeActiveScene = activeSceneSelector(store.getState());
     if (storeActiveScene !== activeScene) {
-      console.log('changing to ', storeActiveScene);
       const scene = game.scene.getScene(activeScene);
       scene.scene.start(storeActiveScene);
       activeScene = storeActiveScene;

@@ -4,6 +4,7 @@ import {
   leaveGame,
   setPlayers,
   setTiles,
+  startGame,
 } from '@thousand/common/dist/redux-store/game/game.slice';
 import eventEmitter from '../../../emitter/event.emitter';
 import { reply, replyAll } from '../../../websocket/websocket.util';
@@ -20,14 +21,14 @@ import {
   PlayerJoinedEvent,
   PlayerLeftEvent,
 } from './game.event.types';
+import { setId } from '@thousand/common/dist/redux-store/player/player.slice';
 
 eventEmitter.on<PlayerJoinedEvent>(
   GameEventType.playerJoined,
   ({ metadata: { clientId } }) => {
     const player = new Player(clientId);
     playerManager.set(clientId, player);
-    game.addPlayer(player);
-    replyAll({ type: 'PLAYERS_COUNT', payload: game.players.length });
+    reply(clientId, setId(clientId));
   }
 );
 
@@ -82,7 +83,8 @@ eventEmitter.on<GameJoinedEvent>(
 eventEmitter.on<GameStartedEvent>(
   GameEventType.gameStarted,
   ({ payload: gameId, metadata: { clientId } }) => {
+    const game = gameManager.getGameById(gameId)!;
     game.start();
-    replyAll(setTiles(game.board.tiles));
+    reply(game.playerIds, startGame());
   }
 );

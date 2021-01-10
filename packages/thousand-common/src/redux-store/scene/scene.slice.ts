@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { createGame, joinGame, leaveGame } from "../game/game.slice";
+import { createGame, joinGame, leaveGame, startGame } from "../game/game.slice";
 import ScenePicker from "./ScenePicker";
 
 export interface SceneState {
@@ -34,6 +34,9 @@ const {
       })
       .addCase(joinGame, (state) => {
         state.activeScene = ScenePicker.lobby;
+      })
+      .addCase(startGame, (state) => {
+        state.activeScene = ScenePicker.main;
       });
   },
 });

@@ -67,6 +67,8 @@ class Game {
   }
 
   start() {
+    console.log('players len: ', this._players.length);
+
     if (this._players.length > 1) {
       this._isRunning = true;
       this._playerTurn = this._players[0].id;

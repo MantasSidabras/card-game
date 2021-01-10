@@ -5,6 +5,7 @@ import {
   GameCommandType,
   JoinGameCommand,
   LeaveGameCommand,
+  StartGameCommand,
 } from '@thousand/common/dist/commands/game/game.command.types';
 import { emit } from 'process';
 import commandEmitter from '../../../emitter/command.emitter';
@@ -76,6 +77,19 @@ commandEmitter.on<JoinGameCommand>(
       }
     } else {
       reply(clientId, { type: 'GAME_NOT_EXIST' });
+    }
+  }
+);
+
+commandEmitter.on<StartGameCommand>(
+  GameCommandType.startGame,
+  ({ emitEvent, metadata: { clientId } }) => {
+    const player = playerManager.get(clientId)!;
+    const game = player.activeGame;
+    console.log('active game: ', game);
+
+    if (game) {
+      emitEvent(gameStartedEvent(game.id));
     }
   }
 );

@@ -1,11 +1,12 @@
 export enum GameCommandType {
-  incrementCounter = 'INCREMENT_COUNTER',
-  updateTile = 'UPDATE_TILE',
-  connect = 'CONNECT',
-  disconnect = 'DISCONNECT',
-  createGame = 'CREATE_GAME',
-  leaveGame = 'LEAVE_GAME',
-  joinGame = 'JOIN_GAME',
+  incrementCounter = "INCREMENT_COUNTER",
+  updateTile = "UPDATE_TILE",
+  connect = "CONNECT",
+  disconnect = "DISCONNECT",
+  createGame = "CREATE_GAME",
+  leaveGame = "LEAVE_GAME",
+  joinGame = "JOIN_GAME",
+  startGame = "START_GAME",
 }
 
 export interface ConnectCommand {
@@ -27,4 +28,8 @@ export interface LeaveGameCommand {
 export interface JoinGameCommand {
   type: GameCommandType.joinGame;
   payload: string;
+}
+
+export interface StartGameCommand {
+  type: GameCommandType.startGame;
 }

@@ -2,15 +2,18 @@ import { createSlice, PayloadAction, createAction } from "@reduxjs/toolkit";
 
 export interface GameState {
   code: string;
+  running: boolean;
   players: string[];
   grid: string[];
 }
 const leaveGame = createAction("leaveGame");
 const createGame = createAction<string>("createGame");
 const joinGame = createAction<string>("joinGame");
+const startGame = createAction("startGame");
 
 const initialState: GameState = {
   code: "",
+  running: false,
   players: [],
   grid: Array(9).fill(""),
 };
@@ -39,9 +42,12 @@ const {
       })
       .addCase(joinGame, (state, { payload }) => {
         state.code = payload;
+      })
+      .addCase(startGame, (state) => {
+        state.running = true;
       });
   },
 });
 
-export { setTiles, leaveGame, createGame, joinGame, setPlayers };
+export { setTiles, leaveGame, createGame, joinGame, setPlayers, startGame };
 export default gameReducer;

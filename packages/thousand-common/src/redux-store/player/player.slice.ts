@@ -1,24 +1,27 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ID } from "../../types";
 
 export interface PlayerState {
+  id: ID;
   username: string;
   level: number;
   queryResult: string;
 }
 
 const initialState: PlayerState = {
-  username: '',
+  id: "",
+  username: "",
   level: 0,
-  queryResult: '',
+  queryResult: "",
 };
 
-const {
-  reducer: playerReducer,
-  actions: { levelup, setName, setResult, setLevel },
-} = createSlice({
-  name: 'player',
+const { reducer: playerReducer, actions } = createSlice({
+  name: "player",
   initialState,
   reducers: {
+    setId: (state, { payload }: PayloadAction<ID>) => {
+      state.id = payload;
+    },
     setName: (state, { payload }: PayloadAction<string>) => {
       state.username = payload;
     },
@@ -34,5 +37,5 @@ const {
   },
 });
 
-export { levelup, setName, setResult, setLevel };
+export const { levelup, setId, setName, setResult, setLevel } = actions;
 export default playerReducer;
