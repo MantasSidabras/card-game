@@ -7,7 +7,6 @@ import {
   LeaveGameCommand,
   StartGameCommand,
 } from '@thousand/common/dist/commands/game/game.command.types';
-import { emit } from 'process';
 import commandEmitter from '../../../emitter/command.emitter';
 import { uuid } from '../../../utils/uuid';
 import { reply } from '../../../websocket/websocket.util';
@@ -86,10 +85,18 @@ commandEmitter.on<StartGameCommand>(
   ({ emitEvent, metadata: { clientId } }) => {
     const player = playerManager.get(clientId)!;
     const game = player.activeGame;
-    console.log('active game: ', game);
 
     if (game) {
-      emitEvent(gameStartedEvent(game.id));
+      if (game.haveEnoughPlayers) {
+        emitEvent(gameStartedEvent(game.id));
+      } else {
+        reply(clientId, {
+          type: 'NOT_ENOUGH_PLAYERS',
+          payload: game.playerIds.length,
+        });
+      }
+    } else {
+      reply(clientId, { type: 'GAME_DOES_NOT_EXIST' });
     }
   }
 );

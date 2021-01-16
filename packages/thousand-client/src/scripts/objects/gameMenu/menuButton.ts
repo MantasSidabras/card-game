@@ -53,6 +53,7 @@ export default class MenuButton extends Phaser.GameObjects.Container {
 
   onClick(callback?: ButtonArgs['onClick']) {
     this.button.setTexture(ButtonKey.clicked);
+    this.setY(this.y + 5);
     if (callback) {
       callback();
     }
@@ -60,5 +61,6 @@ export default class MenuButton extends Phaser.GameObjects.Container {
 
   onClickUp() {
     this.button.setTexture(ButtonKey.default);
+    this.setY(this.y - 5);
   }
 }

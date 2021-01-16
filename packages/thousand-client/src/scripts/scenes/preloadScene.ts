@@ -1,7 +1,9 @@
 import { changeScene } from '@thousand/common/dist/redux-store/scene/scene.slice';
 import ScenePicker from '@thousand/common/dist/redux-store/scene/ScenePicker';
 import store from '@thousand/common/dist/redux-store/store';
-
+import { getCardSprites } from '../sprites/cardSprites';
+const cardSuites = ['clubs', 'diamonds', 'hearts', 'spades'];
+const cardValues = ['09', '10', 'J', 'Q', 'K', 'A'];
 export default class PreloadScene extends Phaser.Scene {
   constructor() {
     super({ key: ScenePicker.preload });
@@ -14,11 +16,23 @@ export default class PreloadScene extends Phaser.Scene {
       this.load.image(`btn-${i}-disabled`, `assets/Ui/grey_button0${i}.png`);
     }
     this.load.image('phaser-logo', 'assets/img/phaser-logo.png');
+
+    // cardSuites.forEach(suite => {
+    //   cardValues.forEach(value => {
+    //     this.load.image(`card-${suite}-${value}`, `assets/Cards/card_${suite}_${value}.png`);
+    //   });
+    // });
+    getCardSprites().forEach(sprite => {
+      this.load.image(sprite, `assets/Cards/${sprite}.png`);
+    });
+
+    this.load.image('card_back', 'assets/Cards/card_back.png');
+    this.load.image('card_empty', 'assets/Cards/card_empty.png');
   }
 
   create() {
     // this.scene.start(ScenePicker.menu);
-    store.dispatch(changeScene(ScenePicker.menu));
+    store.dispatch(changeScene(ScenePicker.main));
     /**
      * This is how you would dynamically import the mainScene class (with code splitting),
      * add the mainScene to the Scene Manager

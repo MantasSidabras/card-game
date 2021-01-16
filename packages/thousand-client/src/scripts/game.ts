@@ -32,6 +32,9 @@ const config: Phaser.Types.Core.GameConfig = {
   dom: {
     createContainer: true,
   },
+  render: {
+    pixelArt: true,
+  },
 };
 let activeScene = activeSceneSelector(store.getState());
 

@@ -34,6 +34,10 @@ class Game {
     return this._players;
   }
 
+  get haveEnoughPlayers() {
+    return this._players.length > 1;
+  }
+
   get playerIds(): ID[] {
     return this._players.map(({ id }) => id);
   }
