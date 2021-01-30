@@ -1,4 +1,6 @@
 import { Scene } from 'phaser';
+import { CARD_SCALE } from '../../../consts';
+import CardHolder from '../card-holder/cardHolder';
 import { CardSuite, CardValue } from './card.types';
 
 interface CardArgs {
@@ -11,11 +13,12 @@ interface CardArgs {
 }
 
 export default class Card extends Phaser.GameObjects.Sprite {
+  private _occupiedHolder: CardHolder | null;
   private _scene: Scene;
   private _isVisible: boolean;
   private _value: number;
 
-  constructor(scene: Phaser.Scene, { sprite, x, y, value, isVisible }: CardArgs) {
+  constructor(scene: Phaser.Scene, { sprite, x, y, value, isVisible = true }: CardArgs) {
     super(scene, x, y, sprite);
     scene.input.mouse.disableContextMenu();
     this._isVisible = Boolean(isVisible);
@@ -23,17 +26,11 @@ export default class Card extends Phaser.GameObjects.Sprite {
       this.setTexture('card_back');
     }
     this._value = value;
-    this.scene = scene;
-    this.setScale(2);
+    this._scene = scene;
+    this.setScale(CARD_SCALE);
     this.setInteractive();
-    scene.input.setDraggable(this);
 
-    scene.input.on('drag', (pointer, gameObject: Phaser.GameObjects.Sprite, dragX: number, dragY: number) => {
-      gameObject.x = dragX;
-      gameObject.y = dragY;
-      scene.children.bringToTop(gameObject);
-    });
-
+    scene.physics.add.existing(this);
     // scene.input.enableDebug(this);
 
     this.on('pointerdown', pointer => this.onClick(pointer, sprite));
@@ -54,15 +51,15 @@ export default class Card extends Phaser.GameObjects.Sprite {
   };
 
   private onHover = () => {
-    this.scene.add.tween({
+    this._scene.add.tween({
       targets: this,
-      scale: 2.5,
+      scale: 2.3,
       duration: 150,
     });
   };
 
   private onBlur = () => {
-    this.scene.add.tween({
+    this._scene.add.tween({
       targets: this,
       scale: 2,
       duration: 150,
@@ -79,5 +76,18 @@ export default class Card extends Phaser.GameObjects.Sprite {
 
   private toggleIsVisible() {
     this._isVisible = !this._isVisible;
+  }
+
+  public occupy(holder: CardHolder) {
+    if (this._occupiedHolder) {
+      this._occupiedHolder.free();
+    }
+
+    holder.occupy(this);
+    this._occupiedHolder = holder;
+  }
+
+  get occupiedHolder() {
+    return this._occupiedHolder;
   }
 }

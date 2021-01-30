@@ -1,11 +1,10 @@
 import { Scene } from 'phaser';
 import { getCardSprites } from '../../sprites/cardSprites';
 import Card from '../card/card';
-import { CardSuite } from '../card/card.types';
 import { mapCardToThousandValue, mapToSuite } from '../card/card.utils';
 
 class Deck {
-  _cards: Card[];
+  private _cards: Card[];
   constructor(scene: Scene) {
     const cards = getCardSprites().map((sprite, index) => {
       const [_, suite, value] = sprite.split('_');
@@ -21,6 +20,10 @@ class Deck {
       return card;
     });
     this._cards = cards;
+  }
+
+  get cards() {
+    return this._cards;
   }
 }
 
