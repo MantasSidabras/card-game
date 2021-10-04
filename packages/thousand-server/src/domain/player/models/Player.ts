@@ -1,13 +1,14 @@
 import { ID } from '@thousand/common/src/types';
-import Game from '../../game/models/Game';
+import { NoGame } from '../../game/models/game-states/NoGame';
+import { GameType } from '../../game/models/Game.types';
+import { PlayerType } from './Player.types';
 
-class Player {
+class Player implements PlayerType {
   private readonly _id: ID;
-  private _activeGame: Game | null;
+  private _activeGame: GameType = new NoGame();
 
   constructor(id: ID) {
     this._id = id;
-    this._activeGame = null;
   }
 
   get id() {
@@ -17,16 +18,6 @@ class Player {
   get activeGame() {
     return this._activeGame;
   }
-
-  joinGame(game: Game) {
-    this._activeGame = game;
-  }
-
-  leaveGame() {
-    this._activeGame = null;
-  }
 }
 
 export default Player;
-
-const players = new Map<ID, Player>();

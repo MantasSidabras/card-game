@@ -14,3 +14,6 @@ windows:
       - shell_command: # pane no. 3
           - cd ./thousand-client
           - yarn start
+      - shell_command: # pane no. 3
+          - cd ./thousand-visualizer
+          - yarn start

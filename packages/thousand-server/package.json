@@ -21,10 +21,13 @@
   "dependencies": {
     "@thousand/common": "1.0.0",
     "@types/express": "^4.17.9",
+    "@xstate/inspect": "^0.5.0",
     "express": "^4.17.1",
+    "fp-ts": "^2.11.4",
     "glob": "^7.1.6",
     "redis": "^3.0.2",
     "uuid": "^8.3.2",
-    "ws": "^7.4.1"
+    "ws": "^7.4.1",
+    "xstate": "^4.25.0"
   }
 }

@@ -1,86 +1,63 @@
 import { ID } from '@thousand/common/src/types';
-import { uuid } from '../../../utils/uuid';
-import Board from '../../board/models/Board';
+import { NoPlayer } from '../../player/models/NoPlayer';
 import Player from '../../player/models/Player';
+import { PlayerType } from '../../player/models/Player.types';
 import { generateCodeFromId } from './codeGenerator';
+import { GameState } from './game-states/GameState';
+import { GameType } from './Game.types';
 
-class Game {
+class Game implements GameType {
   private readonly _id: ID;
   private readonly _code: string;
-  private readonly _board: Board;
-  private readonly _players: Player[];
-  private _playerTurn: ID;
-  private _isRunning = false;
+  private _players: readonly Player[];
+  private _state: GameState;
+  private _playerTurn: PlayerType;
 
   constructor(id: ID) {
     this._players = [];
     this._id = id;
+    this._playerTurn = new NoPlayer();
     this._code = generateCodeFromId(id);
-    this._board = new Board();
   }
 
   get id() {
     return this._id;
   }
-
   get code() {
     return this._code;
   }
 
-  get board() {
-    return this._board;
+  get playerIds(): ID[] {
+    return this.players.map(x => x.id);
   }
+
   get players() {
     return this._players;
   }
 
-  get haveEnoughPlayers() {
-    return this._players.length > 1;
-  }
-
-  get playerIds(): ID[] {
-    return this._players.map(({ id }) => id);
+  set playerTurn(player: PlayerType) {
+    this._playerTurn = player;
   }
 
   get playerTurn() {
     return this._playerTurn;
   }
 
-  get isRunning() {
-    return this._isRunning;
-  }
-
   nextTurn() {
-    const currentIdx = this._players.findIndex(p => p.id === this._playerTurn);
-    let newIndex = currentIdx + 1;
-    if (newIndex >= this._players.length) {
-      newIndex = 0;
-    }
-    this._playerTurn = this._players[newIndex].id;
+    this._state.nextTurn();
   }
 
   addPlayer(player: Player) {
-    this._players.push(player);
+    this._state.addPlayer(player);
   }
 
-  removePlayer(playerId: ID): Player {
-    const index = this._players.findIndex(p => p.id === playerId);
-    const player = this._players[index];
-    this._players.splice(index, 1);
-    return player;
+  setPlayers(players: Player[]) {
+    this._players = players;
   }
 
   start() {
-    console.log('players len: ', this._players.length);
-
-    if (this._players.length > 1) {
-      this._isRunning = true;
-      this._playerTurn = this._players[0].id;
-    } else {
-      throw new Error('not enough players to start the game');
-    }
+    this._state = this._state.start();
   }
 }
 
 export default Game;
-export const game = new Game(uuid());

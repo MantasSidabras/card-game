@@ -13,7 +13,8 @@ class GameManager {
     return this._games;
   }
 
-  createNewGame(gameId: ID) {
+  createNewGame() {
+    const gameId = uuid();
     const game = new Game(gameId);
     this._games.set(gameId, game);
     return game;
@@ -30,15 +31,6 @@ class GameManager {
       }
     }
     return null;
-  }
-
-  startGame(gameId: ID) {
-    const game = this._games.get(gameId);
-    if (game) {
-      game.start();
-    } else {
-      throw new Error('Cannot start, the game does not exist');
-    }
   }
 }
 
