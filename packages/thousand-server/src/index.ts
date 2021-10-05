@@ -3,9 +3,7 @@ import glob from 'glob';
 import http from 'http';
 import path from 'path';
 import * as WebSocket from 'ws';
-import Game from './domain/game/models/Game';
 import { gameService } from './domain/game3/game.machine';
-import { uuid } from './utils/uuid';
 import { wsHandler } from './websocket/websocket.handler';
 
 glob.sync(path.join(__dirname, 'domain/**/*listener.ts')).forEach(file => {

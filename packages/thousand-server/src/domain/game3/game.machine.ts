@@ -1,6 +1,6 @@
 import { ID } from '@thousand/common/src/types';
 import { assign, createMachine, interpret } from 'xstate';
-import { uuid } from '../../utils/uuid';
+import { uuid } from '@thousand/common/dist/utils/uuid';
 import { generateCodeFromId } from '../game/models/codeGenerator';
 
 type GameEvents =

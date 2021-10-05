@@ -1,5 +1,5 @@
+import { uuid } from '@thousand/common/dist/utils/uuid';
 import { ID } from '@thousand/common/src/types';
-import { uuid } from '../../../utils/uuid';
 import Game from './Game';
 
 class GameManager {

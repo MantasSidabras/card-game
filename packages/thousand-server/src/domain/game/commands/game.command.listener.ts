@@ -10,7 +10,6 @@ import {
 import { createGame, leaveGame, setPlayers } from '@thousand/common/dist/redux-store/game/game.slice';
 import { setId } from '@thousand/common/dist/redux-store/player/player.slice';
 import commandEmitter from '../../../emitter/command.emitter';
-import { uuid } from '../../../utils/uuid';
 import { reply } from '../../../websocket/websocket.util';
 import Player from '../../player/models/Player';
 import { playerManager } from '../../player/models/PlayerManager';

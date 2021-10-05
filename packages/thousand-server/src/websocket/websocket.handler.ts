@@ -1,12 +1,9 @@
-import {
-  connect,
-  disconnect,
-} from '../../../thousand-common/dist/commands/game/game.command';
+import { connect, disconnect } from '../../../thousand-common/dist/commands/game/game.command';
 import { executeCommand } from '../MessageHandler/message.handler';
-import { uuid } from '../utils/uuid';
 import { Client } from './websocket.types';
 import * as WebSocket from 'ws';
 import { clients } from './websocket.clients';
+import { uuid } from '@thousand/common/dist/utils/uuid';
 
 export const wsHandler = (ws: WebSocket) => {
   const client: Client = { id: uuid(), connection: ws };
