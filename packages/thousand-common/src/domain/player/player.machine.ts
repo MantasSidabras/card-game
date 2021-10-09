@@ -8,19 +8,7 @@ export type PlayerContext = {
   score: number;
 };
 
-type PlayerEvents =
-  | { type: 'START' }
-  | { type: 'ADD_PLAYER'; playerId: ID }
-  | { type: 'REMOVE_PLAYER'; playerId: ID }
-  | { type: 'NEXT_TURN' }
-  | { type: 'END_ROUND' };
-
-type GameContext = {
-  id: ID;
-  code: string;
-  players: ID[];
-  winner: ID | null;
-};
+type PlayerEvents = any;
 
 type CreatePlayerType = (player: { id: PlayerContext['id']; name: PlayerContext['name'] }) => PlayerContext;
 export const createPlayer: CreatePlayerType = ({ id, name }) => ({
@@ -28,3 +16,5 @@ export const createPlayer: CreatePlayerType = ({ id, name }) => ({
   name,
   score: 0,
 });
+
+const playerMachine = createMachine<PlayerContext, PlayerEvents>({});

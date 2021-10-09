@@ -8,6 +8,7 @@ export type GameEvents =
   | { type: 'START' }
   | AddPlayerEvent
   | RemovePlayerEvent
+  | { type: 'done.invoke.lobby'; data: { players: PlayerContext[] } }
   | { type: 'NEXT_TURN' }
   | { type: 'END_ROUND' };
 
